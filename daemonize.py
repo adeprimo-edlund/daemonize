@@ -189,7 +189,7 @@ class Daemonize(object):
         These actions will be done after SIGINT/SIGTERM.
         """
         self.logger.info("Caught signal %s." % signum)
-        self.exit()
+        sys.exit(0)
 
     def exit(self):
         """
