@@ -170,8 +170,7 @@ class Daemonize(object):
 
         self.drop_privileges()
 
-        # Set custom action on SIGINT/SIGTERM.
-        signal.signal(signal.SIGINT, self.sigreceived)
+        # Set custom action on SIGTERM.
         signal.signal(signal.SIGTERM, self.sigreceived)
 
         atexit.register(self.exit)
@@ -186,7 +185,7 @@ class Daemonize(object):
 
     def sigreceived(self, signum, frame):
         """
-        These actions will be done after SIGINT/SIGTERM.
+        These actions will be done after SIGTERM.
         """
         self.logger.info("Caught signal %s." % signum)
         sys.exit(0)
@@ -256,13 +255,13 @@ class Daemonize(object):
         except:
             pid = None
 
-        if pid:
+        if pid is not None:
             try:
                 os.kill(pid, 0)
 
                 raise Exception('Daemon already running')
             except OSError:
-                raise
+                pass
 
         try:
             with open(self.pid, 'w') as pidfile:
