@@ -1,13 +1,19 @@
 language: python
+
 python:
     - "2.6"
     - "2.7"
     - "3.3"
     - "3.4"
     - "3.5"
+    - "3.6"
+
 install: sudo pip install nose sphinx sphinx_rtd_theme; sudo pip install .
+
 script: sudo nosetests && sudo make docs
+
 notifications:
     webhooks:
         - http://tg.thesharp.org:8888/travis
+
 sudo: true
